@@ -76,7 +76,6 @@ public struct Polynomial {
             // Subtract (divisor × quotientTerm) from remainder
             let subtrahend = (divisor * quotientTerm).galoised
             remainderPoly = (remainderPoly - subtrahend).galoised
-            print(remainderPoly.description)
         }
 
         return DivisionResult(

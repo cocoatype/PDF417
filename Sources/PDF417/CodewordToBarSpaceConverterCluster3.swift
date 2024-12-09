@@ -1,4 +1,4 @@
-public struct CodewordToBarSpaceConverterCluster3 {
+public struct CodewordToBarSpaceConverterCluster3: CodewordToBarSpaceConverter.UnderlyingConverter {
     public init() {}
     public func value(for codeword: Codeword) -> Int {
         switch codeword {
