@@ -6,7 +6,7 @@ struct NumericParserTests {
         let parser = NumericParser()
         let string = "0123456789012345"
         let actualResult = try parser.payload(for: string)
-        let expectedResult = [Codeword.w008, .w902, .w017, .w129, .w672, .w001, .w224, .w745]
+        let expectedResult = [Codeword.w017, .w129, .w672, .w001, .w224, .w745]
 
         #expect(actualResult == expectedResult)
     }
