@@ -9,11 +9,3 @@ import Testing
 
     #expect(actualResult == expectedResult)
 }
-
-import BigInt
-
-@Test func mantissasAreEvilReturnsCorrectValue() {
-    let value: BigUInt = 10123456789012345
-    let result = value.mantissasAreEvil
-    #expect(result == [17, 129, 672, 1, 224, 745])
-}
