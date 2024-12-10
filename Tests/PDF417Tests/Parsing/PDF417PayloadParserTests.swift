@@ -16,7 +16,7 @@ struct PDF417PayloadParserTests {
         let parser = PDF417PayloadParser()
         let string = "Cocoatype"
         let actualResult = try parser.payload(for: string)
-        let expectedResult = [Codeword.w000]
+        let expectedResult = [Codeword.w006, .w087, .w422, .w420, .w594, .w454, .w142, .w096, .w125, .w402, .w123, .w157, .w106, .w232]
 
         #expect(actualResult == expectedResult)
     }
