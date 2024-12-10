@@ -1,4 +1,4 @@
-public enum Codeword {
+public enum Codeword: Sendable {
     case w000
     case w001
     case w002
