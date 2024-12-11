@@ -95,6 +95,6 @@ struct ByteTagger {
         }
     }
 
-    private let textParser = TextParser()
-    private let numericParser = NumericParser()
+    private let textParser = TextEncoder()
+    private let numericParser = NumericEncoder()
 }

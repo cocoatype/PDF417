@@ -1,7 +1,7 @@
 import BigInt
 import Foundation
 
-struct NumericParser {
+struct NumericEncoder {
     private static let supportedByteRange: ClosedRange<UInt8> = 0x30...0x39
     func canParse(_ byte: UInt8) -> Bool {
         Self.supportedByteRange.contains(byte)
@@ -9,7 +9,7 @@ struct NumericParser {
 
     func payload(for data: Data) throws -> [Codeword] {
         guard let string = String(data: data, encoding: .ascii) else {
-            throw NumericParseError.notValidASCII
+            throw NumericEncodingError.notValidASCII
         }
 
         return try payload(for: string)
@@ -30,7 +30,7 @@ struct NumericParser {
             return copy
         }.map { (string: String) throws -> BigUInt in
             // convert to actual integer value
-            guard let int = BigUInt(string, radix: 10) else { throw NumericParseError.notANumber }
+            guard let int = BigUInt(string, radix: 10) else { throw NumericEncodingError.notANumber }
             return int
         }
 
@@ -43,7 +43,7 @@ struct NumericParser {
     private let codewordConverter = IntToCodewordConverter()
 }
 
-enum NumericParseError: Error {
+enum NumericEncodingError: Error {
     case notValidASCII
     case notANumber
 }

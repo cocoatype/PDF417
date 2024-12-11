@@ -1,13 +1,15 @@
 import BigInt
 import Foundation
 
-struct PDF417PayloadParser {
+public struct PDF417CodewordsGenerator {
+    public init() {}
+
     private static let numericLatch = Codeword.w902
     private static let textLatch = Codeword.w900
     private static let byteShift = Codeword.w913
     private static let byteLatch = Codeword.w901
     private static let byteLatchMod6 = Codeword.w924
-    func payload(for data: Data) throws -> [Codeword] {
+    public func dataCodewords(for data: Data) throws -> [Codeword] {
         var codewords = [Codeword]()
         var cursor = data.startIndex
         var currentCompactionMode = CompactionMode.text
@@ -54,26 +56,26 @@ struct PDF417PayloadParser {
         // prepend symbol length
         try codewords.insert(codewordConverter.codeword(for: codewords.count + 1), at: 0)
 
-        // pass to error correction
-        let corrections = try correctionCalculator.correctionCodewords(for: codewords, level: CorrectionLevel(dataCount: codewords.count))
-
-        // append corrections
-        return codewords + corrections
+        return codewords
     }
 
-    func payload(for string: String) throws -> [Codeword] {
+    public func dataCodewords(for string: String) throws -> [Codeword] {
         guard let data = string.data(using: .ascii) else {
             throw PDF417PayloadParseError.unrepresentableInASCII
         }
 
-        return try payload(for: data)
+        return try dataCodewords(for: data)
+    }
+
+    public func correctionCodewords(for codewords: [Codeword], correctionLevel: CorrectionLevel) throws -> [Codeword] {
+        try correctionCalculator.correctionCodewords(for: codewords, level: correctionLevel)
     }
 
     private let tagger = ByteTagger()
     private let codewordConverter = IntToCodewordConverter()
-    private let numericParser = NumericParser()
-    private let textParser = TextParser()
-    private let byteParser = ByteParser()
+    private let numericParser = NumericEncoder()
+    private let textParser = TextEncoder()
+    private let byteParser = ByteEncoder()
     private let correctionCalculator = CorrectionCalculator()
 }
 

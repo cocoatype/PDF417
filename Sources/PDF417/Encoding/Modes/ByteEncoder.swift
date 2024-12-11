@@ -1,7 +1,7 @@
 import BigInt
 import Foundation
 
-struct ByteParser {
+struct ByteEncoder {
     func payload(for data: Data) throws -> [Codeword] {
         let strider = stride(from: 0, to: data.count, by: 6)
         let byteSegments = strider.map { startOffset in

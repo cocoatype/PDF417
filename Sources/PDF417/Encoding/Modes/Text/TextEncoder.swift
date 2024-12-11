@@ -1,6 +1,6 @@
 import Foundation
 
-struct TextParser {
+struct TextEncoder {
     private static let horizontalTab = UInt8(ascii: "\t")
     private static let lineFeed = UInt8(ascii: "\n")
     private static let carriageReturn = UInt8(ascii: "\r")
@@ -15,7 +15,7 @@ struct TextParser {
     private let symbolPairConverter = TextSymbolPairToCodewordConverter()
     func payload(for data: Data) throws -> [Codeword] {
         guard let string = String(data: data, encoding: .ascii) else {
-            throw TextParseError.unrepresentableInASCII
+            throw TextEncodingError.unrepresentableInASCII
         }
 
         var symbols = try symbols(for: string)
@@ -55,7 +55,7 @@ struct TextParser {
                     counts.append((mode, count))
                 }
 
-                guard let (maxMode, maxModeCount) = modeCounts.max(by: { $0.1 < $1.1 }) else { throw TextParseError.missingMode }
+                guard let (maxMode, maxModeCount) = modeCounts.max(by: { $0.1 < $1.1 }) else { throw TextEncodingError.missingMode }
 
                 if maxModeCount == 1,
                    let shiftSymbol = currentMode.shift(to: maxMode),
@@ -75,7 +75,7 @@ struct TextParser {
     }
 }
 
-enum TextParseError: Error {
+enum TextEncodingError: Error {
     case missingMode
     case unrepresentableInASCII
 }
