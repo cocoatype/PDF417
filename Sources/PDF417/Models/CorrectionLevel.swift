@@ -9,6 +9,15 @@ public enum CorrectionLevel {
     case level7
     case level8
 
+    init(dataCount: Int) {
+        switch dataCount {
+        case 0...40: self = .level2
+        case 41...160: self = .level3
+        case 161...320: self = .level4
+        default: self = .level5
+        }
+    }
+
     var correctionCount: Int {
         switch self {
         case .level0: 2

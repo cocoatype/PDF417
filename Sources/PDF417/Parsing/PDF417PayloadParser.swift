@@ -55,7 +55,7 @@ struct PDF417PayloadParser {
         try codewords.insert(codewordConverter.codeword(for: codewords.count + 1), at: 0)
 
         // pass to error correction
-        let corrections = try correctionCalculator.correctionCodewords(for: codewords, level: .level2)
+        let corrections = try correctionCalculator.correctionCodewords(for: codewords, level: CorrectionLevel(dataCount: codewords.count))
 
         // append corrections
         return codewords + corrections
