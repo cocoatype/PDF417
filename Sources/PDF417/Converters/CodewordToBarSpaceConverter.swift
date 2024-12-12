@@ -1,5 +1,7 @@
-struct CodewordToBarSpaceConverter {
-    func value(for codeword: Codeword, in cluster: Cluster) -> Int {
+public struct CodewordToBarSpaceConverter {
+    public init() {}
+
+    public func value(for codeword: Codeword, in cluster: Cluster) -> Int {
         let underlyingConverter: any UnderlyingConverter = switch cluster {
         case .c0: cluster0Converter
         case .c3: cluster3Converter

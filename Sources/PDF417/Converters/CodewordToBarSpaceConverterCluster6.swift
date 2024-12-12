@@ -1,6 +1,5 @@
-public struct CodewordToBarSpaceConverterCluster6: CodewordToBarSpaceConverter.UnderlyingConverter {
-    public init() {}
-    public func value(for codeword: Codeword) -> Int {
+struct CodewordToBarSpaceConverterCluster6: CodewordToBarSpaceConverter.UnderlyingConverter {
+    func value(for codeword: Codeword) -> Int {
         switch codeword {
         case .w000: 0b11010101111100000
         case .w001: 0b11101010111111000

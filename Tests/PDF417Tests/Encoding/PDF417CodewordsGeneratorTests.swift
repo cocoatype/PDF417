@@ -17,7 +17,7 @@ struct PDF417CodewordsGeneratorTests {
 
     @Test func textOnly() throws {
         let parser = PDF417CodewordsGenerator()
-        let string = "Cocoatype"
+        let string = "abcdefg"
         let actualData = try parser.dataCodewords(for: string)
         let expectedData = [Codeword.w006, .w087, .w422, .w420, .w594, .w454]
         let actualCorrections = try parser.correctionCodewords(for: actualData, correctionLevel: CorrectionLevel(dataCount: actualData.count))
@@ -37,5 +37,11 @@ struct PDF417CodewordsGeneratorTests {
 
         #expect(actualData == expectedData)
         #expect(actualCorrections == expectedCorrections)
+    }
+}
+
+extension Data {
+    var integers: [UInt16] {
+        
     }
 }

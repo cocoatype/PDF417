@@ -1,5 +1,7 @@
-struct CodewordToIntConverter {
-    func value(for codeword: Codeword) -> Int {
+public struct CodewordToIntConverter {
+    public init() {}
+
+    public func value(for codeword: Codeword) -> Int {
         switch codeword {
         case .w000: 0
         case .w001: 1

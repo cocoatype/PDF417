@@ -18,7 +18,7 @@ public enum CorrectionLevel {
         }
     }
 
-    var correctionCount: Int {
+    public var correctionCount: Int {
         switch self {
         case .level0: 2
         case .level1: 4

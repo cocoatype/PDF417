@@ -1,5 +1,8 @@
 public struct RowCalculator {
-    public func leftValue(row: Int, maxRow: Int, correctionLevel: CorrectionLevel, maxColumn: Int) -> Int {
+    public init() {}
+
+    private let intConverter = IntToCodewordConverter()
+    public func leftValue(row: Int, maxRow: Int, correctionLevel: CorrectionLevel, maxColumn: Int) throws -> Codeword {
         let rowValue = (30 * (row / 3))
         let additionalValue = switch Cluster(row: row) {
         case .c0: value(maxRow: maxRow)
@@ -7,10 +10,10 @@ public struct RowCalculator {
         case .c6: value(maxColumn: maxColumn)
         }
 
-        return rowValue + additionalValue
+        return try intConverter.codeword(for: rowValue + additionalValue)
     }
 
-    public func rightValue(row: Int, maxRow: Int, correctionLevel: CorrectionLevel, maxColumn: Int) -> Int {
+    public func rightValue(row: Int, maxRow: Int, correctionLevel: CorrectionLevel, maxColumn: Int) throws -> Codeword {
         let rowValue = (30 * (row / 3))
         let additionalValue = switch Cluster(row: row) {
         case .c0: value(maxColumn: maxColumn)
@@ -18,7 +21,7 @@ public struct RowCalculator {
         case .c6: value(correctionLevel: correctionLevel.value, maxRow: maxRow)
         }
 
-        return rowValue + additionalValue
+        return try intConverter.codeword(for: rowValue + additionalValue)
     }
 
     private func value(maxRow: Int) -> Int { maxRow / 3 }
