@@ -1,13 +1,5 @@
-struct TextSymbolPairToCodewordConverter {
-    private let intConverter = IntToCodewordConverter()
-    func codeword(for pair: (TextSymbol, TextSymbol)) throws -> Codeword {
-        let first = intValue(for: pair.0)
-        let second = intValue(for: pair.1)
-        let total = (first * 30) + second
-        return try intConverter.codeword(for: total)
-    }
-
-    private func intValue(for symbol: TextSymbol) -> Int {
+struct TextSymbolToIntConverter {
+    func intValue(for symbol: TextSymbol) -> Int {
         switch symbol {
         case .s00: 0
         case .s01: 1

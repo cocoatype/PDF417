@@ -1,14 +1,9 @@
 import BigInt
 import Foundation
 
-public struct PDF417CodewordsGenerator {
+public struct CodewordsEncoder {
     public init() {}
 
-    private static let numericLatch = Codeword.w902
-    private static let textLatch = Codeword.w900
-    private static let byteShift = Codeword.w913
-    private static let byteLatch = Codeword.w901
-    private static let byteLatchMod6 = Codeword.w924
     public func dataCodewords(for data: Data) throws -> [Codeword] {
         var codewords = [Codeword]()
         var cursor = data.startIndex
@@ -20,7 +15,7 @@ public struct PDF417CodewordsGenerator {
             switch byte.mode {
             case .numeric:
                 if currentCompactionMode.isNumber == false {
-                    codewords.append(Self.numericLatch)
+                    codewords.append(Codeword.numericLatch)
                 }
 
                 currentCompactionMode = .numeric
@@ -29,7 +24,7 @@ public struct PDF417CodewordsGenerator {
                 cursor = cursor.advanced(by: consecutiveNumbers.count)
             case .text:
                 if currentCompactionMode.isText == false {
-                    codewords.append(Self.textLatch)
+                    codewords.append(Codeword.textLatch)
                 }
 
                 currentCompactionMode = .text
@@ -39,12 +34,12 @@ public struct PDF417CodewordsGenerator {
             case .byte:
                 let consecutiveBytes = bytes[cursor...].prefix(while: \.mode.isByte)
                 if consecutiveBytes.count == 1 && currentCompactionMode == .text {
-                    codewords.append(Self.byteShift)
+                    codewords.append(Codeword.byteShift)
                 } else if consecutiveBytes.count % 6 == 0 && currentCompactionMode.isByte == false {
-                    codewords.append(Self.byteLatchMod6)
+                    codewords.append(Codeword.byteLatchMod6)
                     currentCompactionMode = .byte
                 } else if currentCompactionMode.isByte == false {
-                    codewords.append(Self.byteLatch)
+                    codewords.append(Codeword.byteLatch)
                     currentCompactionMode = .byte
                 }
 
