@@ -63,7 +63,7 @@ struct TextEncoder {
                     symbols.append(shiftSymbol)
                     symbols.append(characterSymbol)
                     continue
-                } else if maxModeCount > 1 {
+                } else {
                     symbols.append(contentsOf: currentMode.latch(to: maxMode))
                     currentMode = maxMode
                     continue
