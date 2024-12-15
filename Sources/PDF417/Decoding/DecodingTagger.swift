@@ -8,18 +8,15 @@ struct DecodingTagger {
 
     private let codewordConverter = CodewordToIntConverter()
     func sequences(in codewords: [Codeword]) throws -> [Sequence] {
-        guard let lengthCodeword = codewords.first,
-              codewordConverter.value(for: lengthCodeword) > 1,
-              codewordConverter.value(for: lengthCodeword) == codewords.count
-        else {
-            throw DecodingTaggerError.incorrectLength
-        }
+        guard let lengthCodeword = codewords.first else { throw DecodingTaggerError.noData }
+        let length = codewordConverter.value(for: lengthCodeword)
+        guard codewords.count >= length else { throw DecodingTaggerError.incorrectLength }
 
         var cursor = codewords.startIndex + 1 // ignore the length indicator
         var sequences: [Sequence] = []
         var currentCompactionMode = CompactionMode.text
 
-        while cursor < codewords.endIndex {
+        while cursor < length {
             let contents = codewords[cursor...].prefix(while: { codeword in
                 Codeword.modeChangers.contains(codeword) == false
             })
@@ -53,5 +50,6 @@ struct DecodingTagger {
 }
 
 enum DecodingTaggerError: Error {
+    case noData
     case incorrectLength
 }
