@@ -62,6 +62,7 @@ struct TextEncoder {
                    let characterSymbol = symbolConverter.symbol(for: nextCharacter, in: maxMode) {
                     symbols.append(shiftSymbol)
                     symbols.append(characterSymbol)
+                    cursor = string.index(cursor, offsetBy: 1)
                     continue
                 } else {
                     symbols.append(contentsOf: currentMode.latch(to: maxMode))
