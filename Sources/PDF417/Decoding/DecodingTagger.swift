@@ -36,6 +36,7 @@ struct DecodingTagger {
                 case .byteShift where cursor + 1 < codewords.count:
                     let nextCodeword = codewords[cursor + 1]
                     sequences.append(Sequence(mode: .byte, codewords: [nextCodeword]))
+                    cursor = cursor.advanced(by: 2)
                 default:
                     cursor = cursor.advanced(by: 1)
                 }
